@@ -114,8 +114,8 @@ validate_git_tag() {
 
 # Fallback to default git tag for development builds
 fallback_git_tag() {
-    git tag -d rolling >/dev/null 2>&1 || true
-    git_version=$(git describe --abbrev=0 --tags 2>/dev/null || echo "v0.0.0")
+    # Fetch the latest tag from GitHub API
+    git_version=$(curl -sL "https://api.github.com/repos/OpenListTeam/OpenList-Frontend/tags" | jq -r '.[0].name // "v0.0.0"')
     git_version_clean=${git_version#v}
     git_version_clean=${git_version_clean%%-*}
 }
