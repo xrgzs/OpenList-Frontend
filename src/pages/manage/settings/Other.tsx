@@ -105,6 +105,9 @@ const OtherSettings = () => {
       setUri(data.find((i) => i.key === "aria2_uri")?.value || "")
       setSecret(data.find((i) => i.key === "aria2_secret")?.value || "")
       setToken(data.find((i) => i.key === "token")?.value || "")
+      setTokenForProxy(
+        data.find((i) => i.key === "token_for_proxy")?.value || "",
+      )
       setQbitUrl(data.find((i) => i.key === "qbittorrent_url")?.value || "")
       setQbitSeedTime(
         data.find((i) => i.key === "qbittorrent_seedtime")?.value || "",
