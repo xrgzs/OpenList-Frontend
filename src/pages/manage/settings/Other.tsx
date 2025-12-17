@@ -32,6 +32,7 @@ const OtherSettings = () => {
   const [thunderBrowserTempDir, setThunderBrowserTempDir] = createSignal("")
   const [thunderXTempDir, setThunderXTempDir] = createSignal("")
   const [token, setToken] = createSignal("")
+  const [tokenForProxy, setTokenForProxy] = createSignal("")
   const [settings, setSettings] = createSignal<SettingItem[]>([])
   const [settingsLoading, settingsData] = useFetch(
     (): PResp<SettingItem[]> =>
@@ -142,6 +143,9 @@ const OtherSettings = () => {
   refresh()
   const [resetTokenLoading, resetToken] = useFetch(
     (): PResp<string> => r.post("/admin/setting/reset_token"),
+  )
+  const [resetTokenForProxyLoading, resetTokenForProxy] = useFetch(
+    (): PResp<string> => r.post("/admin/setting/reset_token_for_proxy"),
   )
   const { copy } = useUtil()
 
@@ -417,6 +421,30 @@ const OtherSettings = () => {
             handleResp(resp, (data) => {
               notify.success(t("settings_other.reset_token_success"))
               setToken(data)
+            })
+          }}
+        >
+          {t("settings_other.reset_token")}
+        </Button>
+      </HStack>
+      <Heading my="$2">{t("settings.token")} for Proxy</Heading>
+      <Input value={tokenForProxy()} readOnly />
+      <HStack my="$2" spacing="$2">
+        <Button
+          onClick={() => {
+            copy(tokenForProxy())
+          }}
+        >
+          {t("settings_other.copy_token")}
+        </Button>
+        <Button
+          colorScheme="danger"
+          loading={resetTokenForProxyLoading()}
+          onClick={async () => {
+            const resp = await resetTokenForProxy()
+            handleResp(resp, (data) => {
+              notify.success(t("settings_other.reset_token_success"))
+              setTokenForProxy(data)
             })
           }}
         >
