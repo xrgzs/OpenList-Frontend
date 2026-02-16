@@ -3,17 +3,27 @@ import { createMemo, Show, createResource, on } from "solid-js"
 import { Markdown, MaybeLoading } from "~/components"
 import { useLink } from "~/hooks"
 import { getSettingBool, objStore, State } from "~/store"
+import { ObjType } from "~/types"
 import { baseName, ext, fetchText } from "~/utils"
 
-const HASH_EXTS = ["sha256", "sha1", "md5", "crc32"]
-const TEXT_EXTS = ["md", "txt"]
+const HASH_EXTS = [
+  "md5",
+  "sha1",
+  "sha256",
+  "sha512",
+  "sfv",
+  "hash",
+  "checksum",
+  "md5sum",
+  "sha256sum",
+]
 
 export function Readme(props: {
   files: string[]
   fromMeta: keyof typeof objStore
 }) {
   const cardBg = useColorModeValue("white", "$neutral3")
-  const { proxyLink } = useLink()
+  const { proxyLink, getLinkByObj } = useLink()
   let readmeExt = "md"
   const readme = createMemo(
     on(
@@ -50,14 +60,13 @@ export function Readme(props: {
         ) {
           const currentBase = baseName(objStore.obj.name)
           const currentExt = ext(objStore.obj.name)
-          const findExts = [...TEXT_EXTS, ...HASH_EXTS]
           const obj = objStore.related.find((item) => {
             if (item.size > 1024 * 1024) {
               return false
             }
             const fileExt = ext(item.name).toLowerCase()
             const fileBase = baseName(item.name)
-            if (findExts.includes(fileExt)) {
+            if (HASH_EXTS.includes(fileExt) || ObjType.TEXT === item.type) {
               if (
                 fileBase === currentBase ||
                 fileBase === `${currentBase}.${currentExt}`
@@ -69,7 +78,10 @@ export function Readme(props: {
           })
           if (obj) {
             readmeExt = ext(obj.name).toLowerCase()
-            return proxyLink(obj, true)
+            if (obj.type === ObjType.TEXT) {
+              return proxyLink(obj, true)
+            }
+            return getLinkByObj(obj, "direct", true)
           }
         }
         return ""
