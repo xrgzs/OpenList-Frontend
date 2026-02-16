@@ -55,6 +55,7 @@ export function Readme(props: {
         // automatically find the file with the same name in related as readme
         if (
           objStore.state === State.File &&
+          objStore.obj.type !== ObjType.TEXT &&
           props.files.includes("footer.md") &&
           objStore.related.length > 0
         ) {
