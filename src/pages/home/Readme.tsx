@@ -1,9 +1,12 @@
 import { Box, useColorModeValue } from "@hope-ui/solid"
 import { createMemo, Show, createResource, on } from "solid-js"
 import { Markdown, MaybeLoading } from "~/components"
-import { useLink, useRouter } from "~/hooks"
+import { useLink } from "~/hooks"
 import { getSettingBool, objStore, State } from "~/store"
-import { fetchText } from "~/utils"
+import { baseName, ext, fetchText } from "~/utils"
+
+const HASH_EXTS = ["sha256", "sha1", "md5", "crc32"]
+const TEXT_EXTS = ["md", "txt"]
 
 export function Readme(props: {
   files: string[]
@@ -11,7 +14,7 @@ export function Readme(props: {
 }) {
   const cardBg = useColorModeValue("white", "$neutral3")
   const { proxyLink } = useLink()
-  const { pathname } = useRouter()
+  let readmeExt = "md"
   const readme = createMemo(
     on(
       () => objStore.state,
@@ -39,6 +42,36 @@ export function Readme(props: {
         ) {
           return objStore[props.fromMeta] as string
         }
+        // automatically find the file with the same name in related as readme
+        if (
+          objStore.state === State.File &&
+          props.files.includes("footer.md") &&
+          objStore.related.length > 0
+        ) {
+          const currentBase = baseName(objStore.obj.name)
+          const currentExt = ext(objStore.obj.name)
+          const findExts = [...TEXT_EXTS, ...HASH_EXTS]
+          const obj = objStore.related.find((item) => {
+            if (item.size > 1024 * 1024) {
+              return false
+            }
+            const fileExt = ext(item.name).toLowerCase()
+            const fileBase = baseName(item.name)
+            if (findExts.includes(fileExt)) {
+              if (
+                fileBase === currentBase ||
+                fileBase === `${currentBase}.${currentExt}`
+              ) {
+                return true
+              }
+            }
+            return false
+          })
+          if (obj) {
+            readmeExt = ext(obj.name).toLowerCase()
+            return proxyLink(obj, true)
+          }
+        }
         return ""
       },
     ),
@@ -49,6 +82,14 @@ export function Readme(props: {
     }
     if (/^https?:\/\//g.test(readme)) {
       res = await fetchText(readme)
+    }
+    // add file type header for hash files and render in code block
+    if (HASH_EXTS.includes(readmeExt) && res.content) {
+      if (res.content instanceof ArrayBuffer) {
+        res.content = new TextDecoder().decode(res.content)
+      }
+      res.content = `#### ${readmeExt.toUpperCase()}:\n\`\`\`\n${res.content}\n\`\`\`\n---\n*Fetched from [${readmeExt.toUpperCase()}](${readme}) file.*`
+      readmeExt = "md"
     }
     return res
   }
@@ -61,6 +102,7 @@ export function Readme(props: {
             children={content()?.content}
             readme
             toc={props.fromMeta === "readme"}
+            ext={readmeExt}
           />
         </MaybeLoading>
       </Box>
