@@ -1,0 +1,1 @@
+System.register(["./index-legacy-NFwG6d3D.js"],function(e,t){"use strict";var r,n,a,c,u,i;return{setters:[e=>{r=e.e4,n=e.E,a=e.ai,c=e.ae,u=e.U,i=e.ah}],execute:function(){e("default",()=>{const[e]=r();return n(i,{get loading(){return e.loading},get children(){return n(a,{class:"word-wrap",get children(){return e()?.content},get ext(){return c(u.obj.name)},toc:!0})}})})}}});
