@@ -1,0 +1,1 @@
+System.register(["./index-legacy-C0uezGgk.js"],function(e,t){"use strict";var n,r,u,a,c,i;return{setters:[e=>{n=e.e0,r=e.z,u=e.ae,a=e.aa,c=e.P,i=e.ad}],execute:function(){e("default",()=>{const[e]=n();return r(i,{get loading(){return e.loading},get children(){return r(u,{get children(){return e()?.content},get ext(){return a(c.obj.name)},toc:!0})}})})}}});
