@@ -24,8 +24,7 @@ export function Readme(props: {
 }) {
   const cardBg = useColorModeValue("white", "$neutral3")
   const { proxyLink, getLinkByObj } = useLink()
-  let readmeExt = "md"
-  const readme = createMemo(
+  const readmeData = createMemo(
     on(
       () => objStore.state,
       () => {
@@ -34,7 +33,7 @@ export function Readme(props: {
             objStore.state,
           )
         ) {
-          return ""
+          return { url: "", ext: "" }
         }
         if ([State.FetchingMore, State.Folder].includes(objStore.state)) {
           const obj = objStore.objs.find((item) =>
@@ -43,14 +42,14 @@ export function Readme(props: {
             ),
           )
           if (obj) {
-            return proxyLink(obj, true)
+            return { url: proxyLink(obj, true), ext: "md" }
           }
         }
         if (
           objStore[props.fromMeta] &&
           typeof objStore[props.fromMeta] === "string"
         ) {
-          return objStore[props.fromMeta] as string
+          return { url: objStore[props.fromMeta] as string, ext: "md" }
         }
         // automatically find the file with the same name in related as readme
         if (
@@ -78,44 +77,47 @@ export function Readme(props: {
             return false
           })
           if (obj) {
-            readmeExt = ext(obj.name).toLowerCase()
+            const readmeExt = ext(obj.name).toLowerCase()
             if (obj.type === ObjType.TEXT) {
-              return proxyLink(obj, true)
+              return { url: proxyLink(obj, true), ext: readmeExt }
             }
-            return getLinkByObj(obj, "direct", true)
+            return { url: getLinkByObj(obj, "direct", true), ext: readmeExt }
           }
         }
-        return ""
+        return { url: "", ext: "" }
       },
     ),
   )
-  const fetchContent = async (readme: string) => {
-    let res = {
-      content: readme as string | ArrayBuffer,
+  const fetchContent = async (data: { url: string; ext: string }) => {
+    let content: string | ArrayBuffer = data.url
+    let resultExt = data.ext
+
+    if (/^https?:\/\//g.test(data.url)) {
+      const res = await fetchText(data.url)
+      content = res.content
     }
-    if (/^https?:\/\//g.test(readme)) {
-      res = await fetchText(readme)
-    }
+
     // add file type header for hash files and render in code block
-    if (HASH_EXTS.includes(readmeExt) && res.content) {
-      if (res.content instanceof ArrayBuffer) {
-        res.content = new TextDecoder().decode(res.content)
+    if (HASH_EXTS.includes(data.ext) && content) {
+      if (content instanceof ArrayBuffer) {
+        content = new TextDecoder().decode(content)
       }
-      res.content = `#### ${readmeExt.toUpperCase()}:\n\`\`\`\n${res.content}\n\`\`\`\n---\n*Fetched from [${readmeExt.toUpperCase()}](${readme}) file.*`
-      readmeExt = "md"
+      content = `#### ${data.ext.toUpperCase()}:\n\`\`\`\n${content}\n\`\`\`\n---\n*Fetched from [${data.ext.toUpperCase()}](${data.url}) file.*`
+      resultExt = "md" // Convert to md since content is now in markdown format
     }
-    return res
+
+    return { content, ext: resultExt }
   }
-  const [content] = createResource(readme, fetchContent)
+  const [content] = createResource(readmeData, fetchContent)
   return (
-    <Show when={getSettingBool("readme_autorender") && readme()}>
+    <Show when={getSettingBool("readme_autorender") && readmeData().url}>
       <Box w="$full" rounded="$xl" p="$4" bgColor={cardBg()} shadow="$lg">
         <MaybeLoading loading={content.loading}>
           <Markdown
             children={content()?.content}
             readme
             toc={props.fromMeta === "readme"}
-            ext={readmeExt}
+            ext={content()?.ext}
           />
         </MaybeLoading>
       </Box>
