@@ -1,0 +1,1 @@
+import{z as t,g as s,bq as n}from"./index-DMkgE-Ex.js";const a=e=>{const r=s();return t(n,{get colorScheme(){return e.yes?"success":"danger"},get children(){return r("global.".concat(e.yes?"yes":"no"))}})};export{a as W};

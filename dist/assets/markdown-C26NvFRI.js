@@ -1,0 +1,1 @@
+import{e0 as r,z as n,ae as a,aa as o,P as s,ad as c}from"./index-DMkgE-Ex.js";const u=()=>{const[e]=r();return n(c,{get loading(){return e.loading},get children(){return n(a,{get children(){var t;return(t=e())==null?void 0:t.content},get ext(){return o(s.obj.name)},toc:!0})}})};export{u as default};
