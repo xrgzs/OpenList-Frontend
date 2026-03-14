@@ -1,0 +1,1 @@
+import{Qr as e,Zi as t,wn as n}from"./store-hxdkzi42.js";import r from"./Upload-dWIHU05J.js";var i=()=>t(e,{justifyContent:`center`,h:`100vh`,get children(){return t(n,{w:`$md`,get children(){return t(r,{})}})}});export{i as default};

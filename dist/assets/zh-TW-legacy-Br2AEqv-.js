@@ -1,0 +1,1 @@
+System.register([],function(e,t){return{setters:[],execute:function(){e("t","英語"),e("n",{lang:"英語"})}}});

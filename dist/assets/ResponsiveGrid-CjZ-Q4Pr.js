@@ -1,0 +1,1 @@
+import{Gn as e,Zi as t,h as n}from"./store-hxdkzi42.js";var r=r=>{let i=n(`settings_layout`),a;return i===`responsive`&&(a=`repeat(auto-fill, minmax(424px, 1fr))`),t(e,{w:`$full`,gap:`$2`,templateColumns:{"@initial":`1fr`,"@lg":a},get children(){return r.children}})};export{r as t};

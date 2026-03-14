@@ -1,0 +1,1 @@
+System.register(["./store-legacy-CE0MDqIH.js"],function(e,t){var r,n,i;return{setters:[function(e){r=e.Gn,n=e.Zi,i=e.h}],execute:function(){e("t",e=>{var t;return"responsive"===i("settings_layout")&&(t="repeat(auto-fill, minmax(424px, 1fr))"),n(r,{w:"$full",gap:"$2",templateColumns:{"@initial":"1fr","@lg":t},get children(){return e.children}})})}}});

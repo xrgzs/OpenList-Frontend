@@ -1,0 +1,1 @@
+System.register(["./store-legacy-CE0MDqIH.js","./SettingItem-legacy-ObOH9A0O.js","./ResponsiveGrid-legacy-RwfPLtl0.js","./Common-legacy-Yi-Rn_rf.js"],function(e,t){var n;return{setters:[function(e){},function(e){},function(e){},function(e){n=e.t}],execute:function(){e("default",n)}}});

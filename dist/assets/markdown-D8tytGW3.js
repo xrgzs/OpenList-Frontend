@@ -1,0 +1,1 @@
+import{D as e,H as t,Zi as n,on as r}from"./store-hxdkzi42.js";import{$t as i,it as a}from"./index-T_-Kpm1W.js";var o=()=>{let[o]=t();return n(i,{get loading(){return o.loading},get children(){return n(a,{get children(){return o()?.content},get ext(){return r(e.obj.name)},toc:!0})}})};export{o as default};
