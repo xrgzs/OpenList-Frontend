@@ -1,0 +1,1 @@
+import{$r as e,Qi as t,Tn as n}from"./store-DXyZRLeD.js";import r from"./Upload-CSO-f7Jp.js";var i=()=>t(e,{justifyContent:`center`,h:`100vh`,get children(){return t(n,{w:`$md`,get children(){return t(r,{})}})}});export{i as default};
