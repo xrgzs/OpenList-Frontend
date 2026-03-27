@@ -1,0 +1,1 @@
+import{D as e,H as t,Qi as n,sn as r}from"./store-DyXvEKBi.js";import{$t as i,it as a}from"./index-9HT6LazM.js";var o=()=>{let[o]=t();return n(i,{get loading(){return o.loading},get children(){return n(a,{get children(){return o()?.content},get ext(){return r(e.obj.name)},toc:!0})}})};export{o as default};

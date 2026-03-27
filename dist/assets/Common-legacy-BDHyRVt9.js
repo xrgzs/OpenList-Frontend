@@ -1,0 +1,1 @@
+System.register(["./Common-legacy-D4ha6QKs.js"],function(e,t){var n;return{setters:[function(e){n=e.t}],execute:function(){e("default",n)}}});
