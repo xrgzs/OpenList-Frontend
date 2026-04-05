@@ -1,0 +1,1 @@
+import{$i as e,W as t,ln as n,w as r}from"./store-3ZfO-EsI.js";import{$t as i,it as a}from"./index-Cl6aIXza.js";var o=()=>{let[o]=t();return e(i,{get loading(){return o.loading},get children(){return e(a,{class:`word-wrap`,get children(){return o()?.content},get ext(){return n(r.obj.name)},toc:!0})}})};export{o as default};
