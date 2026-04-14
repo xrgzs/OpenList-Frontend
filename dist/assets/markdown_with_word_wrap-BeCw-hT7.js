@@ -1,0 +1,1 @@
+import{$i as e,W as t,ln as n,w as r}from"./store-kN1je_9w.js";import{Ut as i,it as a}from"./components-CaTdyl1v.js";var o=()=>{let[o]=t();return e(i,{get loading(){return o.loading},get children(){return e(a,{class:`word-wrap`,get children(){return o()?.content},get ext(){return n(r.obj.name)},toc:!0})}})};export{o as default};
