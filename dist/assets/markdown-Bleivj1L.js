@@ -1,0 +1,1 @@
+import{$i as e,W as t,ln as n,w as r}from"./store-D3mofD2c.js";import{Ut as i,it as a}from"./components-DD9kTRcp.js";var o=()=>{let[o]=t();return e(i,{get loading(){return o.loading},get children(){return e(a,{get children(){return o()?.content},get ext(){return n(r.obj.name)},toc:!0})}})};export{o as default};
