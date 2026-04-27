@@ -1,0 +1,1 @@
+import{Co as e,Ga as t,Si as n}from"./index-DyySrSOn.js";import r from"./Upload-BoSV6o8R.js";var i=()=>e(t,{justifyContent:`center`,h:`100vh`,get children(){return e(n,{w:`$md`,get children(){return e(r,{})}})}});export{i as default};
