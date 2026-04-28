@@ -1,0 +1,1 @@
+import{$t as e,Co as t,Sn as n,Vn as r,ai as i,it as a}from"./index-C1O2x47j.js";var o=()=>{let[o]=r();return t(e,{get loading(){return o.loading},get children(){return t(a,{get children(){return o()?.content},get ext(){return i(n.obj.name)},toc:!0})}})};export{o as default};
