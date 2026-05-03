@@ -1,0 +1,1 @@
+import{$t as e,Ao as t,Qn as n,Yn as r,it as i,wo as a}from"./index-CNOFxM-7.js";var o=async()=>await(await fetch(`https://raw.githubusercontent.com/xrgzs/OpenList/main/README.md`)).text(),s=()=>{n(),r(`manage.sidemenu.about`);let[s]=t(o);return a(e,{get loading(){return s.loading},get children(){return a(i,{get children(){return s()},sanitize:!0})}})};export{s as default};

@@ -1,0 +1,1 @@
+import{$t as e,Sn as t,Vn as n,it as r,oi as i,wo as a}from"./index-CNOFxM-7.js";var o=()=>{let[o]=n();return a(e,{get loading(){return o.loading},get children(){return a(r,{class:`word-wrap`,get children(){return o()?.content},get ext(){return i(t.obj.name)},toc:!0})}})};export{o as default};
