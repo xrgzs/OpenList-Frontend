@@ -1,0 +1,1 @@
+import{$i as e,G as t,ln as n,w as r}from"./store-DYn3X9Xx.js";import{$t as i,it as a}from"./index-Ahh5EXtn.js";var o=()=>{let[o]=t();return e(i,{get loading(){return o.loading},get children(){return e(a,{class:`word-wrap`,get children(){return o()?.content},get ext(){return n(r.obj.name)},toc:!0})}})};export{o as default};
