@@ -1,0 +1,1 @@
+System.register(["./File-legacy-DeTqv-d0.js"],function(e,t){var n;return{setters:[function(e){n=e.t}],execute:function(){e("Download",n),e("default",n)}}});

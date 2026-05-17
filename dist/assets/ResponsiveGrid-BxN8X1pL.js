@@ -1,0 +1,1 @@
+import{Wi as e,un as t,wo as n}from"./index-DmPWOOkC.js";var r=r=>{let i=t(`settings_layout`),a;return i===`responsive`&&(a=`repeat(auto-fill, minmax(424px, 1fr))`),n(e,{w:`$full`,gap:`$2`,templateColumns:{"@initial":`1fr`,"@lg":a},get children(){return r.children}})};export{r as t};

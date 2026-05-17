@@ -1,0 +1,1 @@
+import{$n as e,$t as t,Ao as n,Xn as r,it as i,wo as a}from"./index-DmPWOOkC.js";var o=async()=>await(await fetch(`https://raw.githubusercontent.com/xrgzs/OpenList/main/README.md`)).text(),s=()=>{e(),r(`manage.sidemenu.about`);let[s]=n(o);return a(t,{get loading(){return s.loading},get children(){return a(i,{get children(){return s()},sanitize:!0})}})};export{s as default};

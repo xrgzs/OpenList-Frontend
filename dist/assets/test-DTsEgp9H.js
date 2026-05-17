@@ -1,0 +1,1 @@
+import{Ci as e,Ka as t,wo as n}from"./index-DmPWOOkC.js";import r from"./Upload-BDFboW-J.js";var i=()=>n(t,{justifyContent:`center`,h:`100vh`,get children(){return n(e,{w:`$md`,get children(){return n(r,{})}})}});export{i as default};

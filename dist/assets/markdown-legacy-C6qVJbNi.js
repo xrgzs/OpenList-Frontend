@@ -1,0 +1,1 @@
+System.register(["./index-legacy-BS5rNV3C.js"],function(e,t){var n,r,i,o,u,c;return{setters:[function(e){n=e.$t,r=e.Hn,i=e.Sn,o=e.it,u=e.oi,c=e.wo}],execute:function(){e("default",()=>{const[e]=r();return c(n,{get loading(){return e.loading},get children(){return c(o,{get children(){return e()?.content},get ext(){return u(i.obj.name)},toc:!0})}})})}}});
