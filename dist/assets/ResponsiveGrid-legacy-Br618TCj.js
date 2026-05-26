@@ -1,0 +1,1 @@
+System.register(["./index-legacy-Dv6oQi-1.js"],function(e,t){var n,r,i;return{setters:[function(e){n=e.Ji,r=e.dn,i=e.ko}],execute:function(){e("t",e=>{let t;return"responsive"===r("settings_layout")&&(t="repeat(auto-fill, minmax(424px, 1fr))"),i(n,{w:"$full",gap:"$2",templateColumns:{"@initial":"1fr","@lg":t},get children(){return e.children}})})}}});

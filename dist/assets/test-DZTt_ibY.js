@@ -1,0 +1,1 @@
+import{Di as e,Xa as t,ko as n}from"./index-CVwPcmFE.js";import r from"./Upload-Bun32XEa.js";var i=()=>n(t,{justifyContent:`center`,h:`100vh`,get children(){return n(e,{w:`$md`,get children(){return n(r,{})}})}});export{i as default};
