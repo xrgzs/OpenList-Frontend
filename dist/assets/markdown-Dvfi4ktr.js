@@ -1,0 +1,1 @@
+import{Cn as e,Un as t,at as n,en as r,ko as i,ui as a}from"./index-DvQvtr_h.js";var o=()=>{let[o]=t();return i(r,{get loading(){return o.loading},get children(){return i(n,{get children(){return o()?.content},get ext(){return a(e.obj.name)},toc:!0})}})};export{o as default};

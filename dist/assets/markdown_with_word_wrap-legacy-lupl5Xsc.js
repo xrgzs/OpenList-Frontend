@@ -1,0 +1,1 @@
+System.register(["./index-legacy-CkZBRXtD.js"],function(e,t){var n,r,u,c,o,i;return{setters:[function(e){n=e.Cn,r=e.Un,u=e.at,c=e.en,o=e.ko,i=e.ui}],execute:function(){e("default",()=>{const[e]=r();return o(c,{get loading(){return e.loading},get children(){return o(u,{class:"word-wrap",get children(){return e()?.content},get ext(){return i(n.obj.name)},toc:!0})}})})}}});
