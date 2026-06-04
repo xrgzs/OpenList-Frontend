@@ -1,0 +1,1 @@
+System.register(["./index-legacy-CLEB4Jqg.js"],function(e,t){var n,r,u,c,i,o;return{setters:[function(e){n=e.Cn,r=e.Un,u=e.at,c=e.en,i=e.ko,o=e.ui}],execute:function(){e("default",()=>{const[e]=r();return i(c,{get loading(){return e.loading},get children(){return i(u,{get children(){return e()?.content},get ext(){return o(n.obj.name)},toc:!0})}})})}}});

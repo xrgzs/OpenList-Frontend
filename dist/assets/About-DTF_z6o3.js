@@ -1,0 +1,1 @@
+import{Fo as e,Zn as t,at as n,en as r,er as i,ko as a}from"./index-C4VNBNUc.js";var o=async()=>await(await fetch(`https://raw.githubusercontent.com/xrgzs/OpenList/main/README.md`)).text(),s=()=>{i(),t(`manage.sidemenu.about`);let[s]=e(o);return a(r,{get loading(){return s.loading},get children(){return a(n,{get children(){return s()},sanitize:!0})}})};export{s as default};
