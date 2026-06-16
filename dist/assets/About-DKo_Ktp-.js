@@ -1,0 +1,1 @@
+import{Bo as e,Po as t,an as n,ar as r,at as i,nr as a}from"./index-CaBwFDP4.js";var o=async()=>await(await fetch(`https://raw.githubusercontent.com/xrgzs/OpenList/main/README.md`)).text(),s=()=>{r(),a(`manage.sidemenu.about`);let[s]=e(o);return t(n,{get loading(){return s.loading},get children(){return t(i,{get children(){return s()},sanitize:!0})}})};export{s as default};

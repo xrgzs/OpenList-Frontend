@@ -1,0 +1,1 @@
+System.register(["./index-legacy-BWjCSMgg.js"],function(e,t){var n,r,u,c,i,o;return{setters:[function(e){n=e.Jn,r=e.On,u=e.Po,c=e.an,i=e.at,o=e.hi}],execute:function(){e("default",()=>{const[e]=n();return u(c,{get loading(){return e.loading},get children(){return u(i,{get children(){return e()?.content},get ext(){return o(r.obj.name)},toc:!0})}})})}}});

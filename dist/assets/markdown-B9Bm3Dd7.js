@@ -1,0 +1,1 @@
+import{Jn as e,On as t,Po as n,an as r,at as i,hi as a}from"./index-CaBwFDP4.js";var o=()=>{let[o]=e();return n(r,{get loading(){return o.loading},get children(){return n(i,{get children(){return o()?.content},get ext(){return a(t.obj.name)},toc:!0})}})};export{o as default};
