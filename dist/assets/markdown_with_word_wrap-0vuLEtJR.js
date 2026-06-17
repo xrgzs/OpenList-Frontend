@@ -1,0 +1,1 @@
+import{$n as e,Bo as t,Nn as n,bi as r,st as i,un as a}from"./index-CVxfIXMw.js";var o=()=>{let[o]=e();return t(a,{get loading(){return o.loading},get children(){return t(i,{class:`word-wrap`,get children(){return o()?.content},get ext(){return r(n.obj.name)},toc:!0})}})};export{o as default};
