@@ -1,0 +1,1 @@
+import{Bo as e,sr as t,ur as n}from"./index-D3ncwm3Y.js";import{a as r,o as i}from"./helper-DAXE67SB.js";var a=()=>{let a=n();return t(`manage.sidemenu.upload`),e(i,{type:`upload`,get nameAnalyzer(){return{regex:/^upload (.+) to \[(.+)]\((.+)\)$/,title:e=>e[1],attrs:{[a(`tasks.attr.upload.path`)]:e=>r(e[2],e[3])}}}})};export{a as default};
