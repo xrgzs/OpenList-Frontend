@@ -1,0 +1,1 @@
+System.register(["./File-legacy-C8kpxNy0.js"],function(e,t){var n;return{setters:[function(e){n=e.t}],execute:function(){e("Download",n),e("default",n)}}});
