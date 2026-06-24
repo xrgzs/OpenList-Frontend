@@ -1,0 +1,1 @@
+System.register(["./index-legacy-DHYHLpXz.js"],function(e,t){var n,r,u,c,o,i;return{setters:[function(e){n=e.$n,r=e.Bo,u=e.Nn,c=e.bi,o=e.st,i=e.un}],execute:function(){e("default",()=>{const[e]=n();return r(i,{get loading(){return e.loading},get children(){return r(o,{class:"word-wrap",get children(){return e()?.content},get ext(){return c(u.obj.name)},toc:!0})}})})}}});

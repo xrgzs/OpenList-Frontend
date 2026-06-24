@@ -1,0 +1,1 @@
+import{t as e}from"./File-D0ZwhI-D.js";export{e as Download,e as default};
