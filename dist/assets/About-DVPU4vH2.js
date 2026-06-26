@@ -1,0 +1,1 @@
+import{Ho as e,Jo as t,cr as n,dn as r,dr as i,st as a}from"./index-DteAa_SP.js";var o=async()=>await(await fetch(`https://raw.githubusercontent.com/xrgzs/OpenList/main/README.md`)).text(),s=()=>{i(),n(`manage.sidemenu.about`);let[s]=t(o);return e(r,{get loading(){return s.loading},get children(){return e(a,{get children(){return s()},sanitize:!0})}})};export{s as default};

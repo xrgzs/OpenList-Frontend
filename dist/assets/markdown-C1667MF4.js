@@ -1,0 +1,1 @@
+import{Ho as e,Pn as t,dn as n,er as r,st as i,xi as a}from"./index-DteAa_SP.js";var o=()=>{let[o]=r();return e(n,{get loading(){return o.loading},get children(){return e(i,{get children(){return o()?.content},get ext(){return a(t.obj.name)},toc:!0})}})};export{o as default};

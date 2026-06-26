@@ -1,0 +1,1 @@
+System.register(["./index-legacy-clx-xRUT.js"],function(e,t){var n,r,u,c,i,o;return{setters:[function(e){n=e.Ho,r=e.Pn,u=e.dn,c=e.er,i=e.st,o=e.xi}],execute:function(){e("default",()=>{const[e]=c();return n(u,{get loading(){return e.loading},get children(){return n(i,{get children(){return e()?.content},get ext(){return o(r.obj.name)},toc:!0})}})})}}});
