@@ -1,0 +1,1 @@
+import{Sn as e,Vo as t,aa as n}from"./index-BLQZX02q.js";var r=r=>{let i=e(`settings_layout`),a;return i===`responsive`&&(a=`repeat(auto-fill, minmax(424px, 1fr))`),t(n,{w:`$full`,gap:`$2`,templateColumns:{"@initial":`1fr`,"@lg":a},get children(){return r.children}})};export{r as t};

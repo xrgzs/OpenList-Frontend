@@ -1,0 +1,1 @@
+System.register(["./index-legacy-hoSypYFP.js"],function(e,t){var n,r,u,c,i,o;return{setters:[function(e){n=e.Pn,r=e.Vo,u=e.dn,c=e.er,i=e.st,o=e.xi}],execute:function(){e("default",()=>{const[e]=c();return r(u,{get loading(){return e.loading},get children(){return r(i,{get children(){return e()?.content},get ext(){return o(n.obj.name)},toc:!0})}})})}}});

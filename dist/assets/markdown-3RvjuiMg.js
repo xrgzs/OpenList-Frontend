@@ -1,0 +1,1 @@
+import{Pn as e,Vo as t,dn as n,er as r,st as i,xi as a}from"./index-BLQZX02q.js";var o=()=>{let[o]=r();return t(n,{get loading(){return o.loading},get children(){return t(i,{get children(){return o()?.content},get ext(){return a(e.obj.name)},toc:!0})}})};export{o as default};
