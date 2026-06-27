@@ -1,0 +1,1 @@
+System.register(["./index-legacy-ws92_mSN.js"],function(e,t){var n,r,c,u,i,o;return{setters:[function(e){n=e.Hn,r=e.Qo,c=e.cr,u=e.ft,i=e.ji,o=e.yn}],execute:function(){e("default",()=>{const[e]=c();return r(o,{get loading(){return e.loading},get children(){return r(u,{get children(){return e()?.content},get ext(){return i(n.obj.name)},toc:!0})}})})}}});

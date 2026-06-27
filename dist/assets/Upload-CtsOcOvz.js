@@ -1,0 +1,1 @@
+import{Qo as e,gr as t,yr as n}from"./index-j9R85cvw.js";import{a as r,o as i}from"./helper-Cdst3204.js";var a=()=>{let a=n();return t(`manage.sidemenu.upload`),e(i,{type:`upload`,get nameAnalyzer(){return{regex:/^upload (.+) to \[(.+)]\((.+)\)$/,title:e=>e[1],attrs:{[a(`tasks.attr.upload.path`)]:e=>r(e[2],e[3])}}}})};export{a as default};

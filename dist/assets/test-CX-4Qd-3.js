@@ -1,0 +1,1 @@
+import{Ji as e,Qo as t,_o as n}from"./index-j9R85cvw.js";import r from"./Upload-8np_-yEi.js";var i=()=>t(n,{justifyContent:`center`,h:`100vh`,get children(){return t(e,{w:`$md`,get children(){return t(r,{})}})}});export{i as default};

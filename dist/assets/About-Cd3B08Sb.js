@@ -1,0 +1,1 @@
+import{Qo as e,ft as t,gr as n,is as r,yn as i,yr as a}from"./index-j9R85cvw.js";var o=async()=>await(await fetch(`https://raw.githubusercontent.com/xrgzs/OpenList/main/README.md`)).text(),s=()=>{a(),n(`manage.sidemenu.about`);let[s]=r(o);return e(i,{get loading(){return s.loading},get children(){return e(t,{get children(){return s()},sanitize:!0})}})};export{s as default};
