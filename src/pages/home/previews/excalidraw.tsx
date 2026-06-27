@@ -25,49 +25,29 @@ const ExcalidrawEditor = () => {
   const [error, setError] = createSignal<string | null>(null)
   const [modified, setModified] = createSignal(false)
   const [saving, setSaving] = createSignal(false)
+
   let containerRef: HTMLDivElement | undefined
   let reactRoot: { unmount: () => void; render: (el: any) => void } | undefined
-  let latestElements: any[] = []
-  let latestAppState: any = {}
-  let latestFiles: any = {}
   let excalidrawApiRef: any = null
   let serializeAsJSON: ((elements: any[], appState: any) => string) | null =
     null
+
+  let latestElements: any[] = []
+  let latestAppState: any = {}
+  let latestFiles: any = {}
 
   const canWrite = createMemo(
     () =>
       (userCan("write_content") || objStore.write_content_bypass) &&
       objStore.write !== false,
   )
-
-  if (canWrite()) {
-    const beforeUnloadHandler = (e: BeforeUnloadEvent) => {
-      if (modified()) {
+  useBeforeLeave((e) => {
+    if (canWrite() && modified()) {
+      if (!window.confirm(t("global.unsaved_changes_confirm"))) {
         e.preventDefault()
       }
     }
-    window.addEventListener("beforeunload", beforeUnloadHandler)
-    onCleanup(() =>
-      window.removeEventListener("beforeunload", beforeUnloadHandler),
-    )
-
-    useBeforeLeave((e) => {
-      if (modified()) {
-        if (!window.confirm(t("global.unsaved_changes_confirm"))) {
-          e.preventDefault()
-        }
-      }
-    })
-
-    createShortcut(["Control", "S"], (e: KeyboardEvent | null) => {
-      e?.preventDefault()
-      onSave()
-    })
-    createShortcut(["Meta", "S"], (e: KeyboardEvent | null) => {
-      e?.preventDefault()
-      onSave()
-    })
-  }
+  })
 
   async function onSave() {
     if (!canWrite() || !modified() || saving()) return
@@ -120,16 +100,16 @@ const ExcalidrawEditor = () => {
 
       const React = await import(
         // @ts-ignore
-        /* @vite-ignore */ "https://esm.sh/react@19.0.0"
+        /* @vite-ignore */ "https://esm.sh/react@19"
       )
       const ReactDOM = await import(
         // @ts-ignore
-        /* @vite-ignore */ "https://esm.sh/react-dom@19.0.0/client"
+        /* @vite-ignore */ "https://esm.sh/react-dom@19/client"
       )
       // @ts-ignore external ESM CDN
       const ExcalidrawModule = await import(
         // @ts-ignore
-        /* @vite-ignore */ "https://esm.sh/@excalidraw/excalidraw@0.18.0?deps=react@19.0.0,react-dom@19.0.0"
+        /* @vite-ignore */ "https://esm.sh/@excalidraw/excalidraw@0.18?deps=react@19,react-dom@19"
       )
 
       const { Excalidraw, serializeAsJSON: _serialize } =
@@ -158,6 +138,9 @@ const ExcalidrawEditor = () => {
         }
       }
 
+      if (containerRef.hasChildNodes()) {
+        containerRef.innerHTML = ""
+      }
       reactRoot = ReactDOM.createRoot(containerRef)
       reactRoot!.render(
         React.createElement(Excalidraw, {
@@ -189,7 +172,42 @@ const ExcalidrawEditor = () => {
           excalidrawApiRef.updateScene({ appState: { theme } })
         }
       })
+
+      if (canWrite()) {
+        createShortcut(["Control", "S"], (e: KeyboardEvent | null) => {
+          e?.preventDefault()
+          onSave()
+        })
+        createShortcut(["Meta", "S"], (e: KeyboardEvent | null) => {
+          e?.preventDefault()
+          onSave()
+        })
+
+        // Intercept Cmd/Ctrl+S at capture phase before Excalidraw handles it
+        const onKeyDown = (e: KeyboardEvent) => {
+          if ((e.metaKey || e.ctrlKey) && e.key === "s") {
+            e.preventDefault()
+            e.stopPropagation()
+            onSave()
+          }
+        }
+        containerRef?.addEventListener("keydown", onKeyDown, true)
+
+        const beforeUnloadHandler = (e: BeforeUnloadEvent) => {
+          if (modified()) {
+            e.preventDefault()
+          }
+        }
+        window.addEventListener("beforeunload", beforeUnloadHandler)
+
+        onCleanup(() => {
+          containerRef?.removeEventListener("keydown", onKeyDown, true)
+          window.removeEventListener("beforeunload", beforeUnloadHandler)
+        })
+      }
+
       setLoading(false)
+      setError(null)
     } catch (e: any) {
       console.error("Excalidraw init failed:", e)
       setError(e?.message || "Failed to load Excalidraw")
