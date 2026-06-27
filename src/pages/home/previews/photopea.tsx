@@ -1,23 +1,17 @@
-import { createSignal, createMemo, onMount, onCleanup, Show } from "solid-js"
-import {
-  Button,
-  HStack,
-  IconButton,
-  Menu,
-  MenuContent,
-  MenuItem,
-  MenuTrigger,
-  Icon,
-  Tooltip,
-} from "@hope-ui/solid"
-import { objStore, userCan } from "~/store"
-import { BoxWithFullScreen, FullLoading, Error as Erro } from "~/components"
-import { useRouter, useT } from "~/hooks"
-import { ext, notify } from "~/utils"
-import { StreamUpload } from "~/pages/home/uploads/stream"
-import { FaSolidAngleDown } from "solid-icons/fa"
-import { TbDeviceFloppy } from "solid-icons/tb"
+import { IconButton, Tooltip } from "@hope-ui/solid"
 import { createShortcut } from "@solid-primitives/keyboard"
+import { TbDeviceFloppy, TbFileExport } from "solid-icons/tb"
+import { createMemo, createSignal, onCleanup, onMount, Show } from "solid-js"
+import {
+  BoxWithFullScreen,
+  Error as Erro,
+  FullLoading,
+  ModalInput,
+} from "~/components"
+import { useRouter, useT } from "~/hooks"
+import { StreamUpload } from "~/pages/home/uploads/stream"
+import { objStore, userCan } from "~/store"
+import { ext, notify } from "~/utils"
 
 const PHOTOPEA_ORIGIN = "https://www.photopea.com"
 const PHOTOPEA_URL =
@@ -44,10 +38,13 @@ const PhotopeaPreview = () => {
   const [loading, setLoading] = createSignal(true)
   const [saving, setSaving] = createSignal(false)
   const [error, setError] = createSignal(false)
-  let iframeRef: HTMLIFrameElement | undefined
+  const [showSaveAs, setShowSaveAs] = createSignal(false)
+
+  let iframeRef!: HTMLIFrameElement
   let doneCount = 0
   let saveMode: number = SAVE_MODE.NONE
   let saveAsNew = false
+  let saveAsName = ""
   let buffer = new ArrayBuffer(0)
 
   const canSave = createMemo(
@@ -56,19 +53,8 @@ const PhotopeaPreview = () => {
       objStore.write !== false,
   )
 
-  if (canSave()) {
-    createShortcut(["Control", "S"], (e: KeyboardEvent | null) => {
-      e?.preventDefault()
-      doSave()
-    })
-    createShortcut(["Meta", "S"], (e: KeyboardEvent | null) => {
-      e?.preventDefault()
-      doSave()
-    })
-  }
-
   const doSave = (saveExt?: string, asNew?: boolean) => {
-    if (!iframeRef || saving()) return
+    if (saving()) return
     if (!canSave()) {
       notify.warning(t("global.read_only"))
       return
@@ -85,9 +71,16 @@ const PhotopeaPreview = () => {
 
     iframeRef.contentWindow?.postMessage(
       `app.activeDocument.saveToOE("${saveExt}")`,
-      "*",
+      PHOTOPEA_ORIGIN,
     )
     saveMode = asNew ? SAVE_MODE.SAVE_AS : SAVE_MODE.SAVE
+  }
+
+  const handleSaveAsSubmit = (name: string) => {
+    saveAsName = name
+    const saveExt = ext(name).toLowerCase() || "jpg"
+    doSave(saveExt === "psd" ? "psd:true" : saveExt, true)
+    setShowSaveAs(false)
   }
 
   const handleMessage = (e: MessageEvent) => {
@@ -96,17 +89,21 @@ const PhotopeaPreview = () => {
     if (e.data === "done") {
       if (doneCount === 0) {
         // First "done": Photopea is ready, open the file
-        iframeRef?.contentWindow?.postMessage(
+        iframeRef.contentWindow?.postMessage(
           `app.open("${objStore.raw_url}", "", false)`,
-          "*",
+          PHOTOPEA_ORIGIN,
         )
       } else if (doneCount === 2) {
         // Third "done": file loaded, set document name
-        iframeRef?.contentWindow?.postMessage(
-          `app.activeDocument.name="${objStore.obj.name.replace(/"/g, '\\"')}"`,
-          "*",
+        const escapedName = objStore.obj.name
+          .replace(/\\/g, "\\\\")
+          .replace(/"/g, '\\"')
+        iframeRef.contentWindow?.postMessage(
+          `app.activeDocument.name="${escapedName}"`,
+          PHOTOPEA_ORIGIN,
         )
         setLoading(false)
+        setError(false)
         if (!canSave()) {
           notify.warning(t("global.read_only"))
         }
@@ -119,6 +116,7 @@ const PhotopeaPreview = () => {
     } else if (e.data === SAVE_COMMAND) {
       doSave()
     } else if (e.data === SAVE_PSD_COMMAND) {
+      saveAsName = objStore.obj.name.replace(/\.[^.]+$/, ".psd")
       doSave("psd:true", true)
     } else if (e.data instanceof ArrayBuffer && saveMode > 0) {
       buffer = appendBuffer(buffer, e.data)
@@ -127,9 +125,7 @@ const PhotopeaPreview = () => {
 
   async function handleSave(blob: Blob) {
     try {
-      const fileName = saveAsNew
-        ? objStore.obj.name.replace(/\.[^.]+$/, ".psd")
-        : objStore.obj.name
+      const fileName = saveAsNew ? saveAsName : objStore.obj.name
       const file = new File([blob], fileName, {
         type: blob.type || "application/octet-stream",
       })
@@ -146,12 +142,24 @@ const PhotopeaPreview = () => {
       setSaving(false)
       saveMode = SAVE_MODE.NONE
       saveAsNew = false
+      saveAsName = ""
       buffer = new ArrayBuffer(0)
     }
   }
 
   onMount(() => {
     window.addEventListener("message", handleMessage)
+
+    if (canSave()) {
+      createShortcut(["Control", "S"], (e: KeyboardEvent | null) => {
+        e?.preventDefault()
+        doSave()
+      })
+      createShortcut(["Meta", "S"], (e: KeyboardEvent | null) => {
+        e?.preventDefault()
+        doSave()
+      })
+    }
   })
 
   onCleanup(() => {
@@ -165,34 +173,35 @@ const PhotopeaPreview = () => {
       pos="relative"
       extraButtons={
         <Show when={canSave()}>
-          <HStack spacing="$1">
-            <Tooltip label={`${t("global.save")} (Ctrl+S)`} withArrow>
-              <IconButton
-                aria-label={t("global.save")}
-                loading={saving()}
-                icon={<TbDeviceFloppy />}
-                onClick={() => doSave()}
-                colorScheme="neutral"
-                size="sm"
-              />
-            </Tooltip>
-            <Menu placement="bottom-end">
-              <MenuTrigger
-                as={Button}
-                loading={saving()}
-                px="$2"
-                minW="auto"
-                size="sm"
-              >
-                <Icon as={FaSolidAngleDown} />
-              </MenuTrigger>
-              <MenuContent minW="150px">
-                <MenuItem onClick={() => doSave(undefined, true)}>
-                  {t("global.save_as")}
-                </MenuItem>
-              </MenuContent>
-            </Menu>
-          </HStack>
+          <Tooltip label={`${t("global.save")} (Ctrl+S)`} withArrow>
+            <IconButton
+              aria-label={t("global.save")}
+              loading={saving()}
+              icon={<TbDeviceFloppy />}
+              onClick={() => doSave()}
+              colorScheme="neutral"
+              size="sm"
+            />
+          </Tooltip>
+          <Tooltip label={`${t("global.save_as")}`} withArrow>
+            <IconButton
+              aria-label={t("global.save_as")}
+              loading={saving()}
+              icon={<TbFileExport />}
+              onClick={() => setShowSaveAs(true)}
+              colorScheme="neutral"
+              size="sm"
+            />
+          </Tooltip>
+          <ModalInput
+            opened={showSaveAs()}
+            onClose={() => setShowSaveAs(false)}
+            title="global.save_as"
+            defaultValue={objStore.obj.name}
+            isRenamingFile
+            validateFilename
+            onSubmit={handleSaveAsSubmit}
+          />
         </Show>
       }
     >
