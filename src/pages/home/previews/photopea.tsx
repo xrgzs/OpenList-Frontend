@@ -47,6 +47,7 @@ const PhotopeaPreview = () => {
   let iframeRef: HTMLIFrameElement | undefined
   let doneCount = 0
   let saveMode: number = SAVE_MODE.NONE
+  let saveAsNew = false
   let buffer = new ArrayBuffer(0)
 
   const canSave = createMemo(
@@ -74,6 +75,7 @@ const PhotopeaPreview = () => {
     }
 
     setSaving(true)
+    saveAsNew = asNew ?? false
     if (!saveExt) {
       saveExt = ext(objStore.obj.name).toLowerCase() || "jpg"
       if (saveExt === "psd") {
@@ -125,16 +127,25 @@ const PhotopeaPreview = () => {
 
   async function handleSave(blob: Blob) {
     try {
-      const file = new File([blob], objStore.obj.name, {
+      const fileName = saveAsNew
+        ? objStore.obj.name.replace(/\.[^.]+$/, ".psd")
+        : objStore.obj.name
+      const file = new File([blob], fileName, {
         type: blob.type || "application/octet-stream",
       })
-      await StreamUpload(pathname(), file, () => {}, false, true, false)
+      const dir =
+        pathname()
+          .replace(/\/[^/]*$/, "")
+          .replace(/\/$/, "") || ""
+      const uploadPath = saveAsNew ? `${dir}/${fileName}` : pathname()
+      await StreamUpload(uploadPath, file, () => {}, false, true, false)
       notify.success(t("global.save_success"))
     } catch (e: any) {
       notify.error(e.message)
     } finally {
       setSaving(false)
       saveMode = SAVE_MODE.NONE
+      saveAsNew = false
       buffer = new ArrayBuffer(0)
     }
   }
