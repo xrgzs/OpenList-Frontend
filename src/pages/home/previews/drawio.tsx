@@ -18,7 +18,7 @@ const DrawioPreview = () => {
   const [loading, setLoading] = createSignal(true)
   const [saving, setSaving] = createSignal(false)
   const [error, setError] = createSignal(false)
-  let iframeRef: HTMLIFrameElement | undefined
+  let iframeRef!: HTMLIFrameElement
   let modified = false
 
   const canSave = createMemo(
@@ -27,24 +27,13 @@ const DrawioPreview = () => {
       objStore.write !== false,
   )
 
-  const drawioUrl = () => {
-    let url = `${DRAWIO_ORIGIN}/?proto=json&spin=1&libraries=1`
+  const drawioUrl = createMemo(() => {
+    const base = `${DRAWIO_ORIGIN}/?proto=json&spin=1&libraries=1`
     if (!canSave()) {
-      url += "&noSaveBtn=1&noExitBtn=1&saveAndExit=0"
+      return `${base}&noSaveBtn=1&noExitBtn=1&saveAndExit=0`
     }
-    return url
-  }
-
-  if (canSave()) {
-    createShortcut(["Control", "S"], (e: KeyboardEvent | null) => {
-      e?.preventDefault()
-      doSave()
-    })
-    createShortcut(["Meta", "S"], (e: KeyboardEvent | null) => {
-      e?.preventDefault()
-      doSave()
-    })
-  }
+    return base
+  })
 
   const postMessage = (msg: object) => {
     iframeRef?.contentWindow?.postMessage(JSON.stringify(msg), DRAWIO_ORIGIN)
@@ -90,6 +79,7 @@ const DrawioPreview = () => {
         postMessage({ action: "template", noExitOnCancel: true })
       }
       setLoading(false)
+      setError(false)
       if (!canSave()) {
         notify.warning(t("global.read_only"))
       }
@@ -130,10 +120,6 @@ const DrawioPreview = () => {
   }
 
   async function handleSave(xml: string, silent?: boolean) {
-    if (!canSave()) {
-      notify.warning(t("global.read_only"))
-      return
-    }
     setSaving(true)
     try {
       const file = new File([xml], objStore.obj.name, {
@@ -150,6 +136,17 @@ const DrawioPreview = () => {
 
   onMount(() => {
     window.addEventListener("message", handleMessage)
+
+    if (canSave()) {
+      createShortcut(["Control", "S"], (e: KeyboardEvent | null) => {
+        e?.preventDefault()
+        doSave()
+      })
+      createShortcut(["Meta", "S"], (e: KeyboardEvent | null) => {
+        e?.preventDefault()
+        doSave()
+      })
+    }
   })
 
   onCleanup(() => {
