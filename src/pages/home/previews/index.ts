@@ -442,6 +442,12 @@ const previews: Preview[] = [
     prior: true,
   },
   {
+    key: "open_file_viewer",
+    exts: "*",
+    component: lazy(() => import("./open-file-viewer")),
+    prior: false,
+  },
+  {
     key: "archive",
     exts: (name: string) => {
       const index = UserPermissions.findIndex(
