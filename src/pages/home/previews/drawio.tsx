@@ -1,5 +1,6 @@
 import { IconButton, Tooltip, useColorMode } from "@hope-ui/solid"
 import { createShortcut } from "@solid-primitives/keyboard"
+import { useBeforeLeave } from "@solidjs/router"
 import { TbDeviceFloppy } from "solid-icons/tb"
 import { createMemo, createSignal, onCleanup, onMount, Show } from "solid-js"
 import { BoxWithFullScreen, Error as Erro, FullLoading } from "~/components"
@@ -18,14 +19,22 @@ const DrawioPreview = () => {
   const [loading, setLoading] = createSignal(true)
   const [saving, setSaving] = createSignal(false)
   const [error, setError] = createSignal(false)
+  const [modified, setModified] = createSignal(false)
   let iframeRef!: HTMLIFrameElement
-  let modified = false
 
   const canSave = createMemo(
     () =>
       (userCan("write_content") || objStore.write_content_bypass) &&
       objStore.write !== false,
   )
+
+  useBeforeLeave((e) => {
+    if (canSave() && modified()) {
+      if (!window.confirm(t("global.unsaved_changes_confirm"))) {
+        e.preventDefault()
+      }
+    }
+  })
 
   const drawioUrl = createMemo(() => {
     const base = `${DRAWIO_ORIGIN}/?proto=json&spin=1&libraries=1`
@@ -88,7 +97,7 @@ const DrawioPreview = () => {
       postMessage({ action: "fit", border: 16, maxScale: 1 })
     } else if (msg.event === "save") {
       // User clicked Save inside draw.io
-      modified = true
+      setModified(true)
       await handleSave(msg.xml)
       if (!msg.exit) {
         postMessage({
@@ -96,11 +105,11 @@ const DrawioPreview = () => {
           messageKey: "allChangesSaved",
           modified: false,
         })
-        modified = false
+        setModified(false)
       }
     } else if (msg.event === "autosave" && msg.xml) {
       // Autosave draft — silent, no toast
-      modified = true
+      setModified(true)
       await handleSave(msg.xml, true)
     } else if (msg.event === "export" && msg.xml) {
       // Response to our doSave() export request
@@ -110,10 +119,10 @@ const DrawioPreview = () => {
         messageKey: "allChangesSaved",
         modified: false,
       })
-      modified = false
+      setModified(false)
     } else if (msg.event === "exit") {
       // User clicked Exit — save if modified
-      if (canSave() && modified && msg.xml) {
+      if (canSave() && modified() && msg.xml) {
         await handleSave(msg.xml)
       }
     }
@@ -145,6 +154,17 @@ const DrawioPreview = () => {
       createShortcut(["Meta", "S"], (e: KeyboardEvent | null) => {
         e?.preventDefault()
         doSave()
+      })
+
+      const beforeUnloadHandler = (e: BeforeUnloadEvent) => {
+        if (modified()) {
+          e.preventDefault()
+        }
+      }
+      window.addEventListener("beforeunload", beforeUnloadHandler)
+
+      onCleanup(() => {
+        window.removeEventListener("beforeunload", beforeUnloadHandler)
       })
     }
   })
