@@ -1,0 +1,1 @@
+import{$o as e,ga as t,jn as n}from"./index-DLvVF53F.js";var r=r=>{let i=n(`settings_layout`),a;return i===`responsive`&&(a=`repeat(auto-fill, minmax(424px, 1fr))`),e(t,{w:`$full`,gap:`$2`,templateColumns:{"@initial":`1fr`,"@lg":a},get children(){return r.children}})};export{r as t};

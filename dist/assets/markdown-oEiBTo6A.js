@@ -1,0 +1,1 @@
+import{$o as e,Mi as t,Un as n,bn as r,ft as i,lr as a}from"./index-DLvVF53F.js";var o=()=>{let[o]=a();return e(r,{get loading(){return o.loading},get children(){return e(i,{get children(){return o()?.content},get ext(){return t(n.obj.name)},toc:!0})}})};export{o as default};
