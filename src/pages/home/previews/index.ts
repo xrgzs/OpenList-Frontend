@@ -120,7 +120,12 @@ const previews: Preview[] = [
     component: lazy(() => import("./plist")),
     prior: true,
   },
-
+  {
+    key: "epub",
+    exts: ["epub"],
+    component: lazy(() => import("./epub")),
+    prior: true,
+  },
   ...(import.meta.env.VITE_LITE === "true"
     ? []
     : [

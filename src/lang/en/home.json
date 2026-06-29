@@ -44,6 +44,7 @@
       "audio": "Audio Player",
       "ipa": "IPA Installer",
       "plist": "Plist Installer",
+      "epub": "EPUB Reader",
       "pdf": "PDF Previewer",
       "ppt": "PPT Previewer",
       "xls": "XLS Previewer",
@@ -54,6 +55,14 @@
       "torrent": "Torrent Previewer"
     }
   },
+  "epub_toc": "Table of Contents",
+  "epub_no_toc": "No table of contents",
+  "epub_font_increase": "Increase font size",
+  "epub_font_decrease": "Decrease font size",
+  "epub_theme_dark": "Dark theme",
+  "epub_theme_light": "Light theme",
+  "epub_prev": "Previous page",
+  "epub_next": "Next page",
   "layouts": {
     "list": "List View",
     "grid": "Grid View",
