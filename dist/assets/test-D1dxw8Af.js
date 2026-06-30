@@ -1,0 +1,1 @@
+import{Xi as e,es as t,yo as n}from"./index-B1COyZeb.js";import r from"./Upload-Bk4LvDn3.js";var i=()=>t(n,{justifyContent:`center`,h:`100vh`,get children(){return t(e,{w:`$md`,get children(){return t(r,{})}})}});export{i as default};
