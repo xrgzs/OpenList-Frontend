@@ -1,0 +1,1 @@
+System.register(["./index-legacy-CjP_VYxp.js"],function(e,t){var n,r,u,c,i,o;return{setters:[function(e){n=e.Ni,r=e.Wn,u=e.es,c=e.ft,i=e.ur,o=e.xn}],execute:function(){e("default",()=>{const[e]=i();return u(o,{get loading(){return e.loading},get children(){return u(c,{get children(){return e()?.content},get ext(){return n(r.obj.name)},toc:!0})}})})}}});

@@ -1,0 +1,1 @@
+import{t as e}from"./File-Bd-SIBCA.js";export{e as Download,e as default};
