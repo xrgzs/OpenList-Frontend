@@ -220,6 +220,11 @@ export function Markdown(props: {
   const { isString, text } = useParseText(props.children)
   const { pathname } = useRouter()
 
+  // Non-md files: render as a code block directly, skip the full markdown pipeline
+  const isCodeBlock = createMemo(
+    () => !!props.ext && props.ext.toLowerCase() !== "md",
+  )
+
   const md = createMemo(() => {
     const raw = text(encoding())
     const content =
@@ -253,6 +258,8 @@ export function Markdown(props: {
 
   createEffect(
     on([md, mermaidTheme], async () => {
+      if (isCodeBlock()) return
+
       setShow(false)
 
       const { html, hasMermaid } = await renderMarkdown(
@@ -298,6 +305,20 @@ export function Markdown(props: {
   )
 
   const [markdownRef, setMarkdownRef] = createSignal<HTMLDivElement>()
+  let codeBlockRef!: HTMLPreElement
+
+  createEffect(() => {
+    if (isCodeBlock() && codeBlockRef) {
+      const codeEl = codeBlockRef.querySelector("code")
+      if (codeEl) {
+        const lang = props.ext!.toLowerCase()
+        if (hljs.getLanguage(lang)) {
+          codeEl.className = `language-${lang}`
+          hljs.highlightElement(codeEl)
+        }
+      }
+    }
+  })
 
   return (
     <Box
@@ -306,7 +327,20 @@ export function Markdown(props: {
       pos="relative"
       w="$full"
     >
-      <Show when={show()}>
+      <Show when={isCodeBlock()}>
+        <Box class={clsx("markdown-body", props.class)} p="$4">
+          <pre
+            ref={codeBlockRef}
+            style={{
+              "background-color": "var(--hope-colors-neutral3)",
+              overflow: "auto",
+            }}
+          >
+            <code>{text(encoding())}</code>
+          </pre>
+        </Box>
+      </Show>
+      <Show when={!isCodeBlock() && show()}>
         <Box
           class={clsx("markdown-body", props.class)}
           innerHTML={markdownHTML()}
