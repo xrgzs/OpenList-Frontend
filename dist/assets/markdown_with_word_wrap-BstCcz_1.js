@@ -1,0 +1,1 @@
+import{Ni as e,Wn as t,es as n,ft as r,ur as i,xn as a}from"./index-CQuFIMVq.js";var o=()=>{let[o]=i();return n(a,{get loading(){return o.loading},get children(){return n(r,{class:`word-wrap`,get children(){return o()?.content},get ext(){return e(t.obj.name)},toc:!0})}})};export{o as default};
