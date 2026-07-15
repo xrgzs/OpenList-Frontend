@@ -1,0 +1,1 @@
+import{$i as e,C as t,W as n,sn as r}from"./store-DmGWW9Oe.js";import{Xt as i,Z as a}from"./components-BT4qW6tg.js";var o=()=>{let[o]=n();return e(i,{get loading(){return o.loading},get children(){return e(a,{get children(){return o()?.content},get ext(){return r(t.obj.name)},toc:!0})}})};export{o as default};
