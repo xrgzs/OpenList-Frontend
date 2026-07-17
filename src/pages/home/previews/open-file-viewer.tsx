@@ -113,6 +113,7 @@ const OpenFileViewerPreview = () => {
           height: "100%",
           overflow: "auto",
           position: "relative",
+          display: loading() || error() ? "none" : "block",
         }}
       />
 
