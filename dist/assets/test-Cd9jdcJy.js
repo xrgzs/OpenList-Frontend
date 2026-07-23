@@ -1,0 +1,1 @@
+import{$i as e,Qr as t,wn as n}from"./store-CpaWr734.js";import r from"./Upload-D375oyAD.js";var i=()=>e(t,{justifyContent:`center`,h:`100vh`,get children(){return e(n,{w:`$md`,get children(){return e(r,{})}})}});export{i as default};
