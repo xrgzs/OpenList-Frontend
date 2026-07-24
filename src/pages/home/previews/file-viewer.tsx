@@ -2,11 +2,8 @@ import { createSignal, onMount, onCleanup, Show } from "solid-js"
 import { useColorMode } from "@hope-ui/solid"
 import { objStore } from "~/store"
 import { BoxWithFullScreen, FullLoading, Error as Erro } from "~/components"
-import { useT } from "~/hooks"
+import { useCDN, useT } from "~/hooks"
 import { loadScriptIIFE } from "~/utils"
-
-const CDN_URL =
-  "https://cdn.jsdelivr.net/npm/@file-viewer/web-full@latest/dist/flyfish-file-viewer-web-full.iife.js"
 
 interface ViewerController {
   destroy: () => void
@@ -25,6 +22,7 @@ declare global {
 
 const FileViewerPreview = () => {
   const t = useT()
+  const { npm } = useCDN()
   const { colorMode } = useColorMode()
   const [loading, setLoading] = createSignal(true)
   const [error, setError] = createSignal(false)
@@ -42,7 +40,14 @@ const FileViewerPreview = () => {
         throw new Error("No file URL available")
       }
 
-      await loadScriptIIFE(CDN_URL, "flyfish-file-viewer-web-full")
+      await loadScriptIIFE(
+        npm(
+          "@file-viewer/web-full",
+          "latest",
+          "dist/flyfish-file-viewer-web-full.iife.js",
+        ),
+        "flyfish-file-viewer-web-full",
+      )
 
       if (!window.FlyfishFileViewerWebFull) {
         throw new Error(
