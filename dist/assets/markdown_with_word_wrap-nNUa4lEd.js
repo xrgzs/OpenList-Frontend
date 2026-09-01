@@ -1,0 +1,1 @@
+import{$i as e,C as t,W as n,sn as r}from"./store--XAM2vLQ.js";import{Z as i,sn as a}from"./index-BpOc9yom.js";var o=()=>{let[o]=n();return e(a,{get loading(){return o.loading},get children(){return e(i,{class:`word-wrap`,get children(){return o()?.content},get ext(){return r(t.obj.name)},toc:!0})}})};export{o as default};
