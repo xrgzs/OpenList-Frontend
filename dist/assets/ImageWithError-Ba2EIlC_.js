@@ -1,0 +1,1 @@
+import{$i as e,Ji as t,Qn as n,sa as r,ua as i}from"./store-Cb4to6Ee.js";var a=a=>{let[o,s]=r(!1);return e(t,{get when(){return!o()},get fallback(){return a.fallbackErr},get children(){return e(n,i(a,{onError:()=>{s(!0)}}))}})};export{a as t};
