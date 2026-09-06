@@ -1,0 +1,1 @@
+import{$i as e,Gn as t,u as n}from"./store-hNeZycEf.js";var r=r=>{let i=n(`settings_layout`)===`responsive`?{"@initial":`1fr`,"@lg":`repeat(auto-fill, minmax(424px, 1fr))`}:`1fr`;return e(t,{w:`$full`,gap:`$2`,templateColumns:i,get children(){return r.children}})};export{r as t};
