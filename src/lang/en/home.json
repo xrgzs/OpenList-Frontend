@@ -15,6 +15,9 @@
   "preview": {
     "download": "Download",
     "failed_load_img": "Failed to load image",
+    "file_viewer_error": "Failed to load file viewer",
+    "onlyoffice_error": "Failed to load OnlyOffice editor",
+    "photopea_error": "Failed to load Photopea editor",
     "open_with": "Open with ...",
     "play_with": "Play with ...",
     "install": "Install",
@@ -51,7 +54,13 @@
       "asciinema": "Asciinema Player",
       "video360": "Video360 Player",
       "archive": "Archive Previewer",
-      "torrent": "Torrent Previewer"
+      "torrent": "Torrent Previewer",
+      "file_viewer": "File Viewer",
+      "open_file_viewer": "Open File Viewer",
+      "excalidraw": "Excalidraw Editor",
+      "drawio": "draw.io Editor",
+      "photopea": "Photopea Editor",
+      "onlyoffice": "OnlyOffice Editor"
     }
   },
   "layouts": {

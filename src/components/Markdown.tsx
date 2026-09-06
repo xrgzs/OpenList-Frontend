@@ -10,18 +10,10 @@ import remarkRehype from "remark-rehype"
 import { For, Show, createEffect, createMemo, createSignal, on } from "solid-js"
 import { Motion } from "solid-motionone"
 import { unified } from "unified"
-import { useCDN, useParseText, useRouter } from "~/hooks"
+import { useCDN, useParseText, useResource, useRouter } from "~/hooks"
 import { useScrollListener } from "~/pages/home/toolbar/BackTop.jsx"
-import { getMainColor, getSettingBool, me } from "~/store"
-import {
-  api,
-  loadCSS,
-  loadScriptIIFE,
-  notify,
-  pathDir,
-  pathJoin,
-  pathResolve,
-} from "~/utils"
+import { getMainColor, getSettingBool, objStore } from "~/store"
+import { loadCSS, loadScriptIIFE, notify, pathDir } from "~/utils"
 import { isMobile } from "~/utils/compatibility.js"
 import hljs from "highlight.js"
 import { EncodingSelect } from "."
@@ -31,6 +23,7 @@ type TocItem = { indent: number; text: string; tagName: string; key: string }
 
 const MERMAID_PATTERN = /```mermaid[\s\S]*?```/i
 const MATH_PATTERN = /\$\$[\s\S]+?\$\$|\$[^$\n]+?\$/
+const MARKDOWN_IMAGE_PATTERN = /!\[(.*?)\]\((.*?)\)/g
 
 const [isTocVisible, setVisible] = createSignal(false)
 const [isTocDisabled, setTocDisabled] = createStorageSignal(
@@ -220,45 +213,62 @@ export function Markdown(props: {
   const { isString, text } = useParseText(props.children)
   const { pathname } = useRouter()
 
+  // Non-md files: render as a code block directly, skip the full markdown pipeline
+  const isCodeBlock = createMemo(
+    () => !!props.ext && props.ext.toLowerCase() !== "md",
+  )
+  const markdownDir = createMemo(() =>
+    props.readme ? pathname() : pathDir(pathname()),
+  )
+  const { resolveResourceUrl } = useResource({
+    currentDir: markdownDir,
+    needsSign: () => Boolean(objStore.obj.sign),
+  })
+
+  const resolveMarkdownImageUrls = async (content: string) => {
+    const parts: string[] = []
+    let lastIndex = 0
+
+    for (const match of content.matchAll(MARKDOWN_IMAGE_PATTERN)) {
+      const [fullMatch, name, rawUrl] = match
+      const index = match.index ?? 0
+
+      parts.push(content.slice(lastIndex, index))
+      const resolvedUrl = await resolveResourceUrl(rawUrl)
+      parts.push(`![${name}](${resolvedUrl})`)
+      lastIndex = index + fullMatch.length
+    }
+
+    if (lastIndex === 0) return content
+
+    parts.push(content.slice(lastIndex))
+    return parts.join("")
+  }
+
   const md = createMemo(() => {
     const raw = text(encoding())
-    const content =
-      !props.ext || props.ext.toLowerCase() === "md"
-        ? raw
-        : `\`\`\`${props.ext}\n${raw}\n\`\`\``
-
-    return content.replace(/!\[.*?\]\((.*?)\)/g, (match) => {
-      const name = match.match(/!\[(.*?)\]\(.*?\)/)![1]
-      const rawUrl = match.match(/!\[.*?\]\((.*?)\)/)![1]
-
-      if (
-        rawUrl.startsWith("data:image/") ||
-        rawUrl.startsWith("http://") ||
-        rawUrl.startsWith("https://") ||
-        rawUrl.startsWith("//")
-      ) {
-        return match
-      }
-
-      const resolvedPath = rawUrl.startsWith("/")
-        ? rawUrl
-        : pathResolve(props.readme ? pathname() : pathDir(pathname()), rawUrl)
-
-      const url = `${api}/d${pathJoin(me().base_path, resolvedPath)}`
-      const ans = `![${name}](${url})`
-      console.log(ans)
-      return ans
-    })
+    return !props.ext || props.ext.toLowerCase() === "md"
+      ? raw
+      : `\`\`\`${props.ext}\n${raw}\n\`\`\``
   })
 
   createEffect(
     on([md, mermaidTheme], async () => {
+      if (isCodeBlock()) return
+
+      const currentMd = md()
       setShow(false)
 
+      const content = await resolveMarkdownImageUrls(currentMd)
+      if (currentMd !== md()) return
+
       const { html, hasMermaid } = await renderMarkdown(
-        md(),
+        content,
         props.sanitize || getSettingBool("filter_readme_scripts"),
       )
+
+      if (currentMd !== md()) return
+
       setMarkdownHTML(html)
 
       setTimeout(() => {
@@ -298,6 +308,20 @@ export function Markdown(props: {
   )
 
   const [markdownRef, setMarkdownRef] = createSignal<HTMLDivElement>()
+  let codeBlockRef!: HTMLPreElement
+
+  createEffect(() => {
+    if (isCodeBlock() && codeBlockRef) {
+      const codeEl = codeBlockRef.querySelector("code")
+      if (codeEl) {
+        const lang = props.ext!.toLowerCase()
+        if (hljs.getLanguage(lang)) {
+          codeEl.className = `language-${lang}`
+          hljs.highlightElement(codeEl)
+        }
+      }
+    }
+  })
 
   return (
     <Box
@@ -306,7 +330,20 @@ export function Markdown(props: {
       pos="relative"
       w="$full"
     >
-      <Show when={show()}>
+      <Show when={isCodeBlock()}>
+        <Box class={clsx("markdown-body", props.class)} p="$4">
+          <pre
+            ref={codeBlockRef}
+            style={{
+              "background-color": "var(--hope-colors-neutral3)",
+              overflow: "auto",
+            }}
+          >
+            <code>{text(encoding())}</code>
+          </pre>
+        </Box>
+      </Show>
+      <Show when={!isCodeBlock() && show()}>
         <Box
           class={clsx("markdown-body", props.class)}
           innerHTML={markdownHTML()}

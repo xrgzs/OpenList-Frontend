@@ -54,6 +54,7 @@ const theme: HopeThemeConfig = {
     },
     Textarea: {
       baseStyle: {
+        fontFamily: "$mono",
         rounded: "$lg",
         _focus: {
           boxShadow: "unset",
