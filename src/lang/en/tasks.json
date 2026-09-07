@@ -6,6 +6,7 @@
   "move": "Move file from a storage to another storage",
   "decompress": "Download and decompress an archive file",
   "decompress_upload": "Upload extracted files into target storage",
+  "cron_sync": "Cron Sync Task",
   "done": "Completed",
   "undone": "Running",
   "clear_succeeded": "Clear Succeeded",
@@ -41,6 +42,11 @@
     "copy": {
       "src": "Source Path",
       "dst": "Destination Path"
+    },
+    "cron_sync": {
+      "src": "Source Path",
+      "dst": "Destination Path",
+      "status": "Status"
     },
     "upload": {
       "path": "Path"
