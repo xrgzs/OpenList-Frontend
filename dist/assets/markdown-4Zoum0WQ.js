@@ -1,0 +1,1 @@
+import{C as e,W as t,fn as n,ia as r}from"./store-BpEGx78c.js";import{Q as i,cn as a}from"./index-uBJla3yT.js";var o=()=>{let[o]=t();return r(a,{get loading(){return o.loading},get children(){return r(i,{get children(){return o()?.content},get ext(){return n(e.obj.name)},toc:!0})}})};export{o as default};
