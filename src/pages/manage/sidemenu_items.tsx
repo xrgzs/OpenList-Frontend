@@ -14,6 +14,7 @@ import {
   BsBucket,
   BsHddNetwork,
   BsArrowLeftRight,
+  BsClockHistory,
 } from "solid-icons/bs"
 import { FiLogIn } from "solid-icons/fi"
 import { SiMetabase } from "solid-icons/si"
@@ -165,6 +166,13 @@ export const side_menu_items: SideMenuItem[] = [
         to: "/@manage/tasks/decompress",
         role: UserRole.GENERAL,
         component: lazy(() => import("./tasks/Decompress")),
+      },
+      {
+        title: "manage.sidemenu.cronjobs",
+        icon: BsClockHistory,
+        to: "/@manage/tasks/cronjobs",
+        backend: ["go"],
+        component: lazy(() => import("./tasks/cronjobs/CronJobs")),
       },
     ],
   },
