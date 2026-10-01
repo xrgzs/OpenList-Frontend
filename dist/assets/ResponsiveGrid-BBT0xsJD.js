@@ -1,0 +1,1 @@
+import{Zn as e,aa as t,u as n}from"./store-cdBMtPtI.js";var r=r=>{let i=n(`settings_layout`)===`responsive`?{"@initial":`1fr`,"@lg":`repeat(auto-fill, minmax(424px, 1fr))`}:`1fr`;return t(e,{w:`$full`,gap:`$2`,templateColumns:i,get children(){return r.children}})};export{r as t};

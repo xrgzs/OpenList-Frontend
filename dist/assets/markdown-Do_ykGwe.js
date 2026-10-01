@@ -1,0 +1,1 @@
+import{C as e,W as t,aa as n,pn as r}from"./store-cdBMtPtI.js";import{$ as i,ln as a}from"./index-UFHvBlYw.js";var o=()=>{let[o]=t();return n(a,{get loading(){return o.loading},get children(){return n(i,{get children(){return o()?.content},get ext(){return r(e.obj.name)},toc:!0})}})};export{o as default};

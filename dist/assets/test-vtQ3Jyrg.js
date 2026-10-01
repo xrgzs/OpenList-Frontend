@@ -1,0 +1,1 @@
+import{An as e,aa as t,ii as n}from"./store-cdBMtPtI.js";import r from"./Upload-D7H7_12h.js";var i=()=>t(n,{justifyContent:`center`,h:`100vh`,get children(){return t(e,{w:`$md`,get children(){return t(r,{})}})}});export{i as default};
