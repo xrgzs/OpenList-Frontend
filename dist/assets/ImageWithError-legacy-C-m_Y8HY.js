@@ -1,0 +1,1 @@
+(function(){System.register([`./store-legacy-DxoX2bvs.js`],function(e,t){var n,r,i,a,o;return{setters:[function(e){n=e._a,r=e.ar,i=e.ma,a=e.oa,o=e.ta}],execute:function(){e(`t`,e=>{let[t,s]=i(!1);return a(o,{get when(){return!t()},get fallback(){return e.fallbackErr},get children(){return a(r,n(e,{onError:()=>{s(!0)}}))}})})}}})})();

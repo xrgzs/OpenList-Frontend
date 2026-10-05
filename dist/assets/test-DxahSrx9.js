@@ -1,0 +1,1 @@
+import{ai as e,jn as t,oa as n}from"./store-ess-RuPp.js";import r from"./Upload-Di-Ldv3j.js";var i=()=>n(e,{justifyContent:`center`,h:`100vh`,get children(){return n(t,{w:`$md`,get children(){return n(r,{})}})}});export{i as default};

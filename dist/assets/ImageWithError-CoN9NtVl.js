@@ -1,0 +1,1 @@
+import{_a as e,ar as t,ma as n,oa as r,ta as i}from"./store-ess-RuPp.js";var a=a=>{let[o,s]=n(!1);return r(i,{get when(){return!o()},get fallback(){return a.fallbackErr},get children(){return r(t,e(a,{onError:()=>{s(!0)}}))}})};export{a as t};

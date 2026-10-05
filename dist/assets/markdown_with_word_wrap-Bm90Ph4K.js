@@ -1,0 +1,1 @@
+import{C as e,W as t,mn as n,oa as r}from"./store-ess-RuPp.js";import{$ as i,ln as a}from"./index-55xLmL3c.js";var o=()=>{let[o]=t();return r(a,{get loading(){return o.loading},get children(){return r(i,{class:`word-wrap`,get children(){return o()?.content},get ext(){return n(e.obj.name)},toc:!0})}})};export{o as default};
