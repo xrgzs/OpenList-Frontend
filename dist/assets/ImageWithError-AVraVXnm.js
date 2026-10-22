@@ -1,0 +1,1 @@
+import{Sa as e,Ta as t,la as n,ma as r,pr as i}from"./store-CAXPutEF.js";var a=a=>{let[o,s]=e(!1);return r(n,{get when(){return!o()},get fallback(){return a.fallbackErr},get children(){return r(i,t(a,{onError:()=>{s(!0)}}))}})};export{a as t};

@@ -1,0 +1,1 @@
+import{C as e,Sn as t,W as n,ma as r}from"./store-CAXPutEF.js";import{$ as i,dn as a}from"./index-TKZ6qMr_.js";var o=()=>{let[o]=n();return r(a,{get loading(){return o.loading},get children(){return r(i,{class:`word-wrap`,get children(){return o()?.content},get ext(){return t(e.obj.name)},toc:!0})}})};export{o as default};
