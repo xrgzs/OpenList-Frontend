@@ -29,6 +29,7 @@
     "ftp": "FTP",
     "traffic": "Traffic",
     "plugins": "Plugins",
+    "cronjobs": "Cron Jobs",
     "seed": "Seed"
   },
   "title": "OpenList Management",
