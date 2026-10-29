@@ -1,4 +1,4 @@
-import { Box, useColorModeValue } from "@hope-ui/solid"
+import { Anchor, Box, useColorModeValue } from "@hope-ui/solid"
 import { createMemo, Show, createResource, on } from "solid-js"
 import { Markdown, MaybeLoading } from "~/components"
 import { useLink } from "~/hooks"
@@ -98,35 +98,49 @@ export function Readme(props: {
   )
   const fetchContent = async (data: { url: string; ext: string }) => {
     let content: string | ArrayBuffer = data.url
-    let resultExt = data.ext
+    const isHash = HASH_EXTS.includes(data.ext)
 
     if (/^https?:\/\//g.test(data.url)) {
       const res = await fetchText(data.url)
       content = res.content
     }
 
-    // add file type header for hash files and render in code block
-    if (HASH_EXTS.includes(data.ext) && content) {
-      if (content instanceof ArrayBuffer) {
-        content = new TextDecoder().decode(content)
-      }
-      content = `#### ${data.ext.toUpperCase()}:\n\`\`\`\n${content}\n\`\`\`\n---\n*Fetched from [${data.ext.toUpperCase()}](${data.url}) file.*`
-      resultExt = "md" // Convert to md since content is now in markdown format
+    if (isHash && content instanceof ArrayBuffer) {
+      content = new TextDecoder().decode(content)
     }
 
-    return { content, ext: resultExt }
+    return {
+      content,
+      ext: isHash ? "text" : data.ext,
+      hashExt: isHash ? data.ext : "",
+      sourceUrl: data.url,
+    }
   }
   const [content] = createResource(readmeData, fetchContent)
   return (
     <Show when={getSettingBool("readme_autorender") && readmeData().url}>
       <Box w="$full" rounded="$xl" p="$4" bgColor={cardBg()} shadow="$lg">
         <MaybeLoading loading={content.loading}>
+          <Show when={content()?.hashExt}>
+            <h4>{content()?.hashExt.toUpperCase()}:</h4>
+          </Show>
           <Markdown
             children={content()?.content}
             readme
             toc={props.fromMeta === "readme"}
             ext={content()?.ext}
           />
+          <Show when={content()?.hashExt}>
+            <p>
+              <em>
+                Fetched from{" "}
+                <Anchor href={content()?.sourceUrl}>
+                  {content()?.hashExt.toUpperCase()}
+                </Anchor>{" "}
+                file.
+              </em>
+            </p>
+          </Show>
         </MaybeLoading>
       </Box>
     </Show>
