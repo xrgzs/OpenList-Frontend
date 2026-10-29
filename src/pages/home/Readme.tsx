@@ -55,27 +55,35 @@ export function Readme(props: {
         if (
           objStore.state === State.File &&
           objStore.obj.type !== ObjType.TEXT &&
-          props.files.includes("footer.md") &&
-          objStore.related.length > 0
+          props.files.includes("footer.md")
         ) {
           const currentBase = baseName(objStore.obj.name)
           const currentExt = ext(objStore.obj.name)
-          const obj = objStore.related.find((item) => {
-            if (item.size > 1024 * 1024) {
+          const currentBaseLower = currentBase.toLowerCase()
+          const currentFileBaseLower =
+            `${currentBase}.${currentExt}`.toLowerCase()
+          const siblings = objStore.objs.some(
+            (item) => !item.is_dir && item.name === objStore.obj.name,
+          )
+            ? objStore.objs
+            : []
+          const candidates = [...siblings, ...objStore.related]
+          const matches = candidates.filter((item) => {
+            if (item.is_dir || item.size > 1024 * 1024) {
               return false
             }
             const fileExt = ext(item.name).toLowerCase()
-            const fileBase = baseName(item.name)
-            if (HASH_EXTS.includes(fileExt) || ObjType.TEXT === item.type) {
-              if (
-                fileBase === currentBase ||
-                fileBase === `${currentBase}.${currentExt}`
-              ) {
-                return true
-              }
-            }
-            return false
+            const fileBase = baseName(item.name).toLowerCase()
+            return (
+              (HASH_EXTS.includes(fileExt) || item.type === ObjType.TEXT) &&
+              (fileBase === currentBaseLower ||
+                fileBase === currentFileBaseLower)
+            )
           })
+          const obj =
+            matches.find((item) =>
+              ["md", "markdown", "txt"].includes(ext(item.name).toLowerCase()),
+            ) ?? matches[0]
           if (obj) {
             const readmeExt = ext(obj.name).toLowerCase()
             if (obj.type === ObjType.TEXT) {
