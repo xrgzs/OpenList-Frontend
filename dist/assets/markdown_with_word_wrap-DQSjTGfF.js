@@ -1,0 +1,1 @@
+import{C as e,Cn as t,W as n,_a as r}from"./store-17yOqYIP.js";import{ct as i,zt as a}from"./components-CR-XztrS.js";var o=()=>{let[o]=n();return r(a,{get loading(){return o.loading},get children(){return r(i,{class:`word-wrap`,get children(){return o()?.content},get ext(){return t(e.obj.name)},toc:!0})}})};export{o as default};

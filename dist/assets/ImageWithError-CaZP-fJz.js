@@ -1,0 +1,1 @@
+import{Oa as e,Ta as t,_a as n,fa as r,mr as i}from"./store-17yOqYIP.js";var a=a=>{let[o,s]=t(!1);return n(r,{get when(){return!o()},get fallback(){return a.fallbackErr},get children(){return n(i,e(a,{onError:()=>{s(!0)}}))}})};export{a as t};

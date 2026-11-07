@@ -1,0 +1,1 @@
+import{Bn as e,_a as t,mi as n}from"./store-17yOqYIP.js";import r from"./Upload-CtrIhQWw.js";var i=()=>t(n,{justifyContent:`center`,h:`100vh`,get children(){return t(e,{w:`$md`,get children(){return t(r,{})}})}});export{i as default};

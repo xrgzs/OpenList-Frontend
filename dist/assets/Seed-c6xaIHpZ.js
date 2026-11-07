@@ -1,0 +1,1 @@
+import{Q as e,_a as t,mi as n}from"./store-17yOqYIP.js";import{c as r,o as i,s as a}from"./helper-ByppMdBz.js";var o=()=>(e(`manage.sidemenu.seed_tasks`),t(n,{w:`$full`,alignItems:`start`,spacing:`$4`,get children(){return[t(r,{type:`seed_generate`,get nameAnalyzer(){return i()}}),t(r,{type:`seed_save`,get nameAnalyzer(){return a()}})]}}));export{o as default};

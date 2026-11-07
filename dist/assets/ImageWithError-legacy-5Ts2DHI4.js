@@ -1,0 +1,1 @@
+(function(){System.register([`./store-legacy-gXFAoIWT.js`],function(e,t){var n,r,i,a,o;return{setters:[function(e){n=e.Oa,r=e.Ta,i=e._a,a=e.fa,o=e.mr}],execute:function(){e(`t`,e=>{let[t,s]=r(!1);return i(a,{get when(){return!t()},get fallback(){return e.fallbackErr},get children(){return i(o,n(e,{onError:()=>{s(!0)}}))}})})}}})})();
