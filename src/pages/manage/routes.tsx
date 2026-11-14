@@ -71,13 +71,12 @@ const Placeholder = (props: { title: string; to: string }) => {
 }
 
 /**
- * 媒体库后台（/@manage/media/*）整体要求管理员权限。
+ * 设置页（/@manage/settings/*）要求管理员权限。
  * 管理侧边栏对非管理员本来就隐藏了入口（SideMenu 按 role 过滤），
- * 但 URL 直连 / 媒体库侧栏的「设置」按钮仍能进到页面，这里补一层路由守卫。
+ * 但 URL 直连仍能进到页面，这里补一层路由守卫。
  */
 const withAdminGuard = (to: string, component: Component) => {
-  // 站点设置与媒体库后台都只对管理员开放；其余页面（个人资料 / 2FA 等）保持原样
-  if (!to.startsWith("/media") && !to.startsWith("/settings")) return component
+  if (!to.startsWith("/settings")) return component
   return () => (
     <MustAdmin>
       <Dynamic component={component} />

@@ -5,7 +5,7 @@ import { UserMethods } from "~/types"
 import { notify } from "~/utils"
 
 /**
- * 管理员页面守卫（媒体库后台设置 / 刮削 / STRM 等）。
+ * 管理员页面守卫（站点设置等）。
  *
  * 后端 `/api/admin/*` 已经要求管理员权限，但前端 `/@manage/*` 路由只包了
  * `MustUser`：访客（启用 guest 时的未登录身份）和普通用户照样能打开管理页外壳，
