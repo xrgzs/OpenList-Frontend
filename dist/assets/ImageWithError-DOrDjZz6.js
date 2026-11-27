@@ -1,0 +1,1 @@
+import{Ca as e,Ea as t,ha as n,mr as r,ua as i}from"./store-BgbMgUQR.js";var a=a=>{let[o,s]=e(!1);return n(i,{get when(){return!o()},get fallback(){return a.fallbackErr},get children(){return n(r,t(a,{onError:()=>{s(!0)}}))}})};export{a as t};

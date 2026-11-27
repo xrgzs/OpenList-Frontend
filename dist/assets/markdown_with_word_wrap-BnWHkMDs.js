@@ -1,0 +1,1 @@
+import{C as e,Cn as t,W as n,ha as r}from"./store-BgbMgUQR.js";import{at as i,vn as a}from"./index-DGt77pb-.js";var o=()=>{let[o]=n();return r(a,{get loading(){return o.loading},get children(){return r(i,{class:`word-wrap`,get children(){return o()?.content},get ext(){return t(e.obj.name)},toc:!0})}})};export{o as default};
