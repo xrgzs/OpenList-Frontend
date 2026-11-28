@@ -14,6 +14,7 @@ import {
   BsBucket,
   BsHddNetwork,
   BsArrowLeftRight,
+  BsClockHistory,
 } from "solid-icons/bs"
 import { FiLogIn } from "solid-icons/fi"
 import { SiMetabase } from "solid-icons/si"
@@ -111,12 +112,6 @@ export const side_menu_items: SideMenuItem[] = [
         component: () => <CommonSettings group={Group.TRAFFIC} />,
       },
       {
-        title: "manage.sidemenu.transcode",
-        icon: BsCameraFill,
-        to: "/@manage/settings/transcode",
-        component: () => <CommonSettings group={Group.TRANSCODE} />,
-      },
-      {
         title: "manage.sidemenu.other",
         icon: BsMedium,
         to: "/@manage/settings/other",
@@ -185,6 +180,13 @@ export const side_menu_items: SideMenuItem[] = [
         role: UserRole.GENERAL,
         component: lazy(() => import("./tasks/Seed")),
       },
+      {
+        title: "manage.sidemenu.cronjobs",
+        icon: BsClockHistory,
+        to: "/@manage/tasks/cronjobs",
+        backend: ["go"],
+        component: lazy(() => import("./tasks/cronjobs/CronJobs")),
+      },
     ],
   },
   {
@@ -230,77 +232,6 @@ export const side_menu_items: SideMenuItem[] = [
     to: "/@manage/backup-restore",
     icon: FaSolidDatabase,
     component: lazy(() => import("./backup-restore")),
-  },
-  {
-    title: "manage.sidemenu.media",
-    icon: BsCameraFill,
-    to: "/@manage/media",
-    children: [
-      {
-        title: "manage.sidemenu.media_settings",
-        icon: BsGearFill,
-        to: "/@manage/media/settings",
-        component: lazy(() => import("./media/MediaSettingsPage")),
-      },
-      {
-        title: "manage.sidemenu.media_scrape",
-        icon: BsGearFill,
-        to: "/@manage/media/scrape",
-        component: lazy(() => import("./media/MediaScrapePage")),
-      },
-      {
-        title: "manage.sidemenu.media_strm",
-        icon: BsGearFill,
-        to: "/@manage/media/strm",
-        component: lazy(() => import("./media/MediaStrmPage")),
-      },
-      {
-        title: "manage.sidemenu.media_transcode",
-        icon: BsGearFill,
-        to: "/@manage/media/transcode",
-        component: () => <CommonSettings group={Group.TRANSCODE} />,
-      },
-      {
-        title: "manage.sidemenu.media_video",
-        icon: BsCameraFill,
-        to: "/@manage/media/video",
-        component: lazy(() =>
-          import("./media/MediaManage").then((m) => ({
-            default: m.VideoManage,
-          })),
-        ),
-      },
-      {
-        title: "manage.sidemenu.media_music",
-        icon: BsCameraFill,
-        to: "/@manage/media/music",
-        component: lazy(() =>
-          import("./media/MediaManage").then((m) => ({
-            default: m.MusicManage,
-          })),
-        ),
-      },
-      {
-        title: "manage.sidemenu.media_image",
-        icon: BsCameraFill,
-        to: "/@manage/media/image",
-        component: lazy(() =>
-          import("./media/MediaManage").then((m) => ({
-            default: m.ImageManage,
-          })),
-        ),
-      },
-      {
-        title: "manage.sidemenu.media_book",
-        icon: BsCameraFill,
-        to: "/@manage/media/book",
-        component: lazy(() =>
-          import("./media/MediaManage").then((m) => ({
-            default: m.BookManage,
-          })),
-        ),
-      },
-    ],
   },
   {
     title: "manage.sidemenu.about",
