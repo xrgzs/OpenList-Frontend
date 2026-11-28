@@ -1,0 +1,1 @@
+import{Bn as e,ha as t,mi as n}from"./store-C35mI1ev.js";import r from"./Upload-CV-mxGMK.js";var i=()=>t(n,{justifyContent:`center`,h:`100vh`,get children(){return t(e,{w:`$md`,get children(){return t(r,{})}})}});export{i as default};
